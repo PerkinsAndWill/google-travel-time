@@ -10,6 +10,8 @@ library(scales)
 # source('config.R')
 setwd(getwd())
 
+trips <- read_excel("input.xlsx",sheet = "input") 
+
 ifelse(!dir.exists(file.path(getwd(), "output")), 
        dir.create(file.path(get(),"output")), FALSE)
 
