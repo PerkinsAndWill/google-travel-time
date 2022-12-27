@@ -146,7 +146,7 @@ for(i in 1:nrow(query_frame)){
     
     routes <- steps$transit_details$line$short_name
     route <- routes[!is.na(routes)]  
-    route <- paste(route, collapse = ',')
+    route <- paste(route, collapse = '-')
     query_frame$routes_used[i]<-route
     
     modes <- steps$transit_details$line$vehicle$type
