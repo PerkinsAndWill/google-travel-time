@@ -7,7 +7,8 @@ input = read_excel("input.xlsx")
 od_pair <- expand.grid(input$LabelID, input$LabelID) %>% 
   rename(Origin_ID = Var2, Dest_ID = Var1) %>% 
   relocate(Origin_ID, .before = Dest_ID) %>% 
-  mutate(`OD Pair` = paste(Origin_ID, Dest_ID, sep = "-"))
+  filter(Origin_ID != Dest_ID) %>% 
+  mutate(`OD Pair` = paste(Origin_ID, Dest_ID, sep = "_"))
 
 
 od_pair_input <- od_pair %>% 
