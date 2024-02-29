@@ -136,9 +136,17 @@ for(i in 1:nrow(query_frame)){
       }
       
     # transit dist mi
-    query_frame$transit_dist_mi[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_dist_mi))
-    # transit duration min
-    query_frame$transit_duration_min[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_duration_min))
+    if("TRANSIT" %in% df$travel_mode){
+      query_frame$transit_dist_mi[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_dist_mi))
+      # transit duration min
+      query_frame$transit_duration_min[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_duration_min))
+    }else{
+      query_frame$transit_dist_mi[i] <- NA
+      query_frame$transit_duration_min[i] <- NA
+    }
+    # query_frame$transit_dist_mi[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_dist_mi))
+    # # transit duration min
+    # query_frame$transit_duration_min[i]=sum(df %>% filter(travel_mode=='TRANSIT') %>% select(steps_duration_min))
     # # walk dist mi
     # query_frame$total_walk_dist_mi[i] =sum(df %>% filter(travel_mode=='WALKING') %>% select(steps_dist_mi))
     # # walk duration min
@@ -146,7 +154,7 @@ for(i in 1:nrow(query_frame)){
     
     routes <- steps$transit_details$line$short_name
     route <- routes[!is.na(routes)]  
-    route <- paste(route, collapse = '-')
+    route <- paste(route, collapse = '_')
     query_frame$routes_used[i]<-route
     
     modes <- steps$transit_details$line$vehicle$type
